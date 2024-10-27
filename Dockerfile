@@ -4,6 +4,7 @@ FROM node:18
 # Cài đặt Chromium và các thư viện phụ thuộc
 RUN apt-get update && apt-get install -y \
   chromium \
+  chromium-browser \
   fonts-liberation \
   libasound2 \
   libatk-bridge2.0-0 \
@@ -25,6 +26,8 @@ COPY package*.json ./
 # Cài đặt các dependencies
 RUN npm install
 
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true 
+
 # Copy toàn bộ mã nguồn vào container
 COPY . .
 
@@ -33,6 +36,3 @@ EXPOSE 3000
 
 # Lệnh chạy ứng dụng
 CMD ["node", "index.js"]
-
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser

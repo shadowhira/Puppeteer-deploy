@@ -11,10 +11,10 @@ const { default: puppeteer } = require("puppeteer");
 // Khởi tạo browser và thực hiện các thao tác
 async function crawlHocPhi(res) {
   const browser = await pt.launch({
-    executablePath: puppeteer.executablePath(),
-    headless: false,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser',
+    headless: true,  // Đổi lại thành true khi deploy để tiết kiệm tài nguyên
     args: minimal_args,
-    userDataDir: "./path/to/cache/resource", // cache tài nguyên
+    userDataDir: "./path/to/cache/resource",
   });
 
   const page = await browser.newPage();
