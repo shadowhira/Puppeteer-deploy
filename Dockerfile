@@ -25,7 +25,7 @@ COPY package*.json ./
 # Cài đặt các dependencies
 RUN npm install
 
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true 
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \ PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true 
 
 # Copy toàn bộ mã nguồn vào container
 COPY . .
