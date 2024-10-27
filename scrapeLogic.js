@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+const {crawlDiem} = require("./modules/crawlDiem");
 require("dotenv").config();
 
 const scrapeLogic = async (res) => {
