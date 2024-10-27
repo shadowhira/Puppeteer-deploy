@@ -14,32 +14,25 @@ const scrapeLogic = async (res) => {
         ? process.env.PUPPETEER_EXECUTABLE_PATH
         : puppeteer.executablePath(),
   });
+
   try {
     const page = await browser.newPage();
 
-    await page.goto("https://developer.chrome.com/");
+    // Truy cập trang cần scrape
+    await page.goto("https://qldt.ptit.edu.vn/#/home", {
+      waitUntil: "domcontentloaded",
+    });
 
-    // Set screen size
-    await page.setViewport({ width: 1080, height: 1024 });
+    // Đợi cho phần tử <small> xuất hiện
+    const smallSelector = 'small.text-white.text-center.py-0.my-0';
+    await page.waitForSelector(smallSelector);
 
-    // Type into search box
-    await page.type(".search-box__input", "automate beyond recorder");
+    // Lấy innerText của phần tử <small>
+    const innerText = await page.$eval(smallSelector, el => el.innerText);
 
-    // Wait and click on first result
-    const searchResultSelector = ".search-box__link";
-    await page.waitForSelector(searchResultSelector);
-    await page.click(searchResultSelector);
-
-    // Locate the full title with a unique string
-    const textSelector = await page.waitForSelector(
-      "text/Customize and automate"
-    );
-    const fullTitle = await textSelector.evaluate((el) => el.textContent);
-
-    // Print the full title
-    const logStatement = `The title of this blog post is ${fullTitle}`;
-    console.log(logStatement);
-    res.send(logStatement);
+    // Log ra console và gửi nội dung qua response
+    console.log(`Extracted Text: ${innerText}`);
+    res.send(`Extracted Text: ${innerText}`);
   } catch (e) {
     console.error(e);
     res.send(`Something went wrong while running Puppeteer: ${e}`);
