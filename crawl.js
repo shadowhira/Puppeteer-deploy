@@ -18,7 +18,10 @@ async function crawlHocPhi(res) {
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1500, height: 800 });
+//   // Kiểm tra và thực hiện hành động trên trang nếu trang chưa bị đóng
+// if (!page.isClosed()) {
+//   await page.setViewport({ width: 1500, height: 800 });
+// }
 
   // Chặn các tài nguyên không cần thiết như ảnh, font, media, stylesheet
   await page.setRequestInterception(true);
