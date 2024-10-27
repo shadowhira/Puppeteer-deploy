@@ -2,8 +2,8 @@
 FROM node:18
 
 # Cài đặt Chromium và các thư viện phụ thuộc
-RUN RUN apt-get update && apt-get install -y snapd && \
-  snap install chromium \
+RUN apt-get update && apt-get install -y \
+  chromium \
   fonts-liberation \
   libasound2 \
   libatk-bridge2.0-0 \
